@@ -30,7 +30,7 @@ explicitly forbidden). Instead do the following:
 2. Use the following command in the cloned repo to create a new branch (with the
   same code as master) and to switch to that branch.  
   ``git branch <name of new branch>``  
-  ``git checkout <name of new branch>``
+  ``git checkout <name of new branch>``  
   Note that if you get confused you can use ``git branch`` to see which branches
   exist and which one you are on.
 3. Once you write some code use the following commands to save the changes to your
