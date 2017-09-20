@@ -24,12 +24,15 @@ clone a different branch simply change ``master`` to anything else.
 
 ## Adding your code
 To avoid code clashes in case multiple people are writing code to this repo
-simultaneously, pushing code to master directly is blocked. Instead do the following:
+simultaneously, pushing code to master should be avoided (although it is not 
+explicitly forbidden). Instead do the following:
 1. Clone the master branch as demonstrated above
 2. Use the following command in the cloned repo to create a new branch (with the
   same code as master) and to switch to that branch.  
   ``git branch <name of new branch>``  
   ``git checkout <name of new branch>``
+  Note that if you get confused you can use ``git branch`` to see which branches
+  exist and which one you are on.
 3. Once you write some code use the following commands to save the changes to your
   local machine.  
   ``git add .``  
@@ -53,6 +56,5 @@ simultaneously, pushing code to master directly is blocked. Instead do the follo
   the bottom to see all the changes you are making. Once ready click "create a pull request".
   Then you should be able to approve your own pull request and merge (although it is note
   a bad idea to have someone look at your pull request just in case, especially if you
-  are making lots of changes).
-  
-# test
+  are making lots of changes). (Note that if this annoys you you can also just push to
+  master, but its nice to do this).
