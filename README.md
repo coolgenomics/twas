@@ -15,7 +15,7 @@ We use the weights from this article:
 https://github.com/bogdanlab/TWAS30
 
 ## Development Guidelines / Git Tutorial
-See [Git guidelines](documentation/GIT_GUIDELINE.md)
+See [Git guidelines](documentation/GIT_GUIDELINES.md)
 
 ## Python environment setup and running .py files
 We are using Python 3.6.1 for this repo.  
