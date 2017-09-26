@@ -1,0 +1,3 @@
+numpy
+pandas
+https://bitbucket.org/rpy2/rpy2/get/RELEASE_2_8_6.tar.gz
