@@ -14,14 +14,14 @@ http://gusevlab.org/projects/fusion/
 We use the weights from this article:  
 https://github.com/bogdanlab/TWAS30
 
-## Development Guidelines / Git Tutorial
-See [Git guidelines](documentation/GIT_GUIDELINES.md)
-
 ## Python environment setup and running .py files
 We are using Python 3.6.1 for this repo.  
 I recommend having a look at ``pyenv`` and ``pyenv-virtualenv`` as a good way to
 manage multiple python versions.  
 Once you have python 3.6.1 (and the associated pip) running the following line
 in a bash shell should install all required packages:  
-``pip install -r requirements`` (or `pip3 install -r requirements` if that is the
+``pip install -r requirements.txt`` (or `pip3 install -r requirements.txt` if that is the
 name associated with your python 3.6.1 pip).
+
+## Development Guidelines / Git Tutorial
+See [Git guidelines](documentation/GIT_GUIDELINES.md)
