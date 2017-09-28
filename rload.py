@@ -1,6 +1,8 @@
 from rpy2.robjects import r, pandas2ri
 import numpy as np
 import os.path
+from scipy.sparse import coo_matrix
+import sys
 
 ENET_INDEX = 2
 
@@ -26,7 +28,6 @@ def process_index_file(index_filepath):
         wgtmat, snps, snp2index = rload(dirpath + "/" + rdata_relative_filepath)
         if expr_id in expr_id_cache:
             print("Duplicate expr_id, skipping second.")
-            #raise ValueError("BUG. Expr_id should not have already been processed.")
         else:
             nonzero_snps = list(filter(lambda key: abs(wgtmat[snp2index[key], ENET_INDEX]) > 0, snp2index))
             expr_id_cache[expr_id] = {"wgtmat": wgtmat, "snps": snps, "snp2index": snp2index,
@@ -38,18 +39,18 @@ def process_index_file(index_filepath):
     for expr_id in expr_id_cache:
         for snp in expr_id_cache[expr_id]["nonzero_snps"]:
             gen2expr_wgtmat[expr2row[expr_id], snp2col[snp]] = expr_id_cache[expr_id]["wgtmat"][expr_id_cache[expr_id]["snp2index"][snp], ENET_INDEX]
-    return (gen2expr_wgtmat, expr2row, snp2col)
+    return (coo_matrix(gen2expr_wgtmat), expr2row, snp2col, snp)
 
-def save_gen2expr_wgtmat(filepath, gen2expr_wgtmat, expr2row, snp2col):
-    np.savez_compressed(filepath, gen2expr_wgtmat=gen2expr_wgtmat, expr2row=expr2row, snp2col=snp2col)
+def save_gen2expr_wgtmat(filepath, gen2expr_wgtmat, expr2row, snp2col, snp):
+    np.savez_compressed(filepath, gen2expr_wgtmat=gen2expr_wgtmat, expr2row=expr2row, snp2col=snp2col, snp=snp)
 
 def load_gen2expr_wgtmat(filepath):
     loaded = np.load(filepath)
     return (loaded["gen2expr_wgtmat"], loaded["expr2row"].item(), loaded["snp2col"].item())
 
 if __name__ == "__main__":
-    if input("Do you want to computer matrix and archive it? (y/n): ") == "y":
-        index_filepath = input("Input pos file path and name: ")
-        save_filepath = input("Input name of file where archive should be saved: ")
-        gen2expr_wgtmat, expr2row, snp2col = process_index_file(index_filepath)
-        save_gen2expr_wgtmat(save_filepath, gen2expr_wgtmat, expr2row, snp2col)
+    index_filepath = sys.argv[1]
+    save_filepath = sys.argv[2]
+    gen2expr_wgtmat, expr2row, snp2col, snp = process_index_file(index_filepath)
+    save_gen2expr_wgtmat(save_filepath, gen2expr_wgtmat, expr2row, snp2col, snp)
+    
