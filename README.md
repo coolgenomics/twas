@@ -71,9 +71,14 @@ result is in compressed numpy format and contains the 7 following objects (n is 
 m is genotype dimension, k is expression dimension):
 
 |Name|Description|Format|
-|-----|----------------|---------|
+|----------|---------------------|---------|
 |pred|Risk prediction result for the trait|n*1 numpy array|
 |all_expr|The calculated expression value for all individual |n*k numpy array|
+|sample|The identifier for each individual|n*1 numpy array|
+|gen2expr_wgtmat|The weight matrix for genotype to expression|m*k CSR sparse matrix|
+|alpha|The weight vector for expression to trait|k*1 numpy array|
+|expr2row|Map from expression to row index|map of length k|
+|snp2col|Map from SNP to column index|map of length m|
 
 
 ## Development Guidelines / Git Tutorial
