@@ -21,7 +21,7 @@ def flip_stat(a1, a2, b1, b2):
 	return 0
 
 # flips the sign and clears the weight values whenever necessary
-def flip_weights(gen2expr_wgtmat, snp2col, alleles_path):
+def flip_weights(gen2expr_wgtmat, snp2col, expr2row, alleles_path, snps):
 	with open(alleles_path) as csvfile:
 		csvreader = csv.reader(csvfile)
 		# skips header
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     genos_path = sys.argv[3]
     save_path = sys.argv[4]
     gen2expr_wgtmat, expr2row, snp2col, snps = load_gen2expr_wgtmat(weight_filepath)
-    gen2expr_wgtmat = flip_weights(gen2expr_wgtmat, snp2col, alleles_path)
+    gen2expr_wgtmat = flip_weights(gen2expr_wgtmat, snp2col, expr2row, alleles_path, snps)
     sample, all_expr = calc_expr(gen2expr_wgtmat, snp2col, genos_path)
     save_expr(save_path, sample, all_expr, expr2row)
 
