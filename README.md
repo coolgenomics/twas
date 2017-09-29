@@ -38,6 +38,43 @@ Rscript PlinkToCSV.R \
   --alleles <File name to store the alleles data (with suffix .csv) [required]>
 ```
 
+This will produce two csv files. The genos csv file stores the sample genotype data and alleles
+csv stores the corresponding SNP alleles summary data.
+
+``twas_predict.py`` contains the main script for performing the prediction. The file takes the
+sample data and weights statistics to give a risk prediction for certain phenotypes (schizophrenia 
+in our case). The script uses functions in ``parse_weights.py``, ``calc_expr.py`` and ``predict.py``.
+It can be run as:
+
+```Linux
+python twas_predict.py \
+<File path for Transcriptome weight index file> \
+<File path for sample alleles data (in csv)> \
+<File path for sample genotype data (in csv)> \
+<File path for alpha values> \
+<File path for saving the output>
+```
+
+A sample run is
+
+```Linux
+python twas_predict.py \
+test/WEIGHTS/GTEx.Whole_Blood.pos \
+test/alleles.csv \
+test/genos.csv \
+test/scz.txt \
+test/result.npz
+```
+
+A sample result for the 22nd chromosome is included in the ``results`` directory. The
+result is in compressed numpy format and contains the 7 following objects (n is sample size, 
+m is genotype dimension, k is expression dimension):
+
+|Name|Description|Format|
+|-----|----------------|---------|
+|pred|Risk prediction result for the trait|n*1 numpy array|
+|all_expr|The calculated expression value for all individual |n*k numpy array|
+
 
 ## Development Guidelines / Git Tutorial
 See [Git guidelines](documentation/GIT_GUIDELINES.md)
