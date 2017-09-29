@@ -35,10 +35,37 @@ def flip_weights(gen2expr_wgtmat, snp2col, alleles_path):
 						gen2expr_wgtmat[i,snp2col[row[1]]] *= stat
 	return gen2expr_wgtmat
 
+def calc_expr(gen2expr_wgtmat, snp2col, genos_path):
+	sample = []
+	all_expr = []
+	with open(genos_path) as csvfile:
+		csvreader = csv.reader(csvfile)
+		snp_header = next(csvreader)[1:]
+		snp_map = {}
+		
+		for i in range(len(snp_header)):
+			if snp_header[i] in snp2col:
+				snp_map[snp2col[snp_header[i]]] = i
+		for row in csvreader:
+			sample.append(row[0])
+			row = np.array(row[1:], dtype=int)
+			row_vec = np.array([row[snp_map[i]] if i in snp_map else 0 for i in range(gen2expr_wgtmat.shape[1])])
+			res = gen2expr_wgtmat.dot(row_vec)
+			all_expr.append(res)
+	return (np.array(sample), np.array(all_expr))
+
+def save_expr(filepath, sample, all_expr, expr2row):
+    np.savez_compressed(filepath, sample=sample, all_expr=all_expr, expr2row=expr2row)
 
 if __name__ == "__main__":
     weight_filepath = sys.argv[1]
+    alleles_path = sys.argv[2]
+    genos_path = sys.argv[3]
+    save_path = sys.argv[4]
     gen2expr_wgtmat, expr2row, snp2col, snps = load_gen2expr_wgtmat(weight_filepath)
     gen2expr_wgtmat = flip_weights(gen2expr_wgtmat, snp2col, alleles_path)
+    sample, all_expr = calc_expr(gen2expr_wgtmat, snp2col, genos_path)
+    save_expr(save_path, sample, all_expr, expr2row)
+
 
 
