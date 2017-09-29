@@ -5,7 +5,7 @@ option_list = list(
   make_option("--ref", action="store", default=NA, type='character',
               help="Prefix to reference LD files in binary PLINK format by chromosome [required]"),
   make_option("--chr", action="store", default=NA, type='character',
-              help="Chromosome to analyze, currently only single chromosome analyses are performed [required]"),
+              help="Chromosome to analyze [required]"),
   make_option("--genos", action="store", default=NA, type='character',
               help="File name to store the genos data (with suffix .csv) [required]"),
   make_option("--alleles", action="store", default=NA, type='character',
