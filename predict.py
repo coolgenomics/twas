@@ -21,10 +21,10 @@ def save_pred(filepath, pred, sample):
 
 
 if __name__ == "__main__":
-    expr_filepath = sys.argv[1]
-    alpha_path = sys.argv[2]
-    save_path = sys.argv[3]
-    sample, all_expr, expr2row = load_expr(expr_filepath)
-    alpha = extract_alpha(alpha_path, expr2row)
-    pred = all_expr.dot(alpha)
-    save_pred(save_path, pred, alpha)
+	expr_filepath = sys.argv[1]
+	alpha_path = sys.argv[2]
+	save_path = sys.argv[3]
+	sample, all_expr, expr2row = load_expr(expr_filepath)
+	alpha = extract_alpha(alpha_path, expr2row)
+	pred = all_expr.dot(alpha)
+	save_pred(save_path, pred, alpha)

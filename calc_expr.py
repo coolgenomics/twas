@@ -54,6 +54,18 @@ def calc_expr(gen2expr_wgtmat, snp2col, genos_path):
 			all_expr.append(res)
 	return (np.array(sample), np.array(all_expr))
 
+def calc_expr_by_data(gen2expr_wgtmat, snp2col, genos, snps):
+	all_expr = []
+	snp_map = {}
+	for i in range(len(snps)):
+		if snps[i] in snp2col:
+			snp_map[snp2col[snps[i]]] = i
+	for row in genos:
+		row_vec = np.array([row[snp_map[i]] if i in snp_map else 0 for i in range(gen2expr_wgtmat.shape[1])])
+		res = gen2expr_wgtmat.dot(row_vec)
+		all_expr.append(res)
+	return np.array(all_expr)
+
 def save_expr(filepath, sample, all_expr, expr2row):
     np.savez_compressed(filepath, sample=sample, all_expr=all_expr, expr2row=expr2row)
 
